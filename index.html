@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LeaseWatch — Track Beat Lease Stream Caps &amp; Upgrade Revenue</title>
+  <meta name="description" content="Know when artists who leased your beats approach their stream caps so you never miss an upgrade or exclusive sale." />
+  <style>
+    :root {
+      --bg: #0c0d10;
+      --surface: #15171c;
+      --surface-2: #1c1f26;
+      --border: #2a2e39;
+      --text: #f3f4f6;
+      --muted: #9ca3af;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --good: #22c55e;
+      --warn: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
+    .tag {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .hero {
+      padding: 64px 0 48px;
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin: 0 0 18px;
+    }
+    .subhead {
+      font-size: 1.125rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 0 32px;
+    }
+    .signup-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      max-width: 600px;
+    }
+    .form-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    input[type="email"], input[type="text"] {
+      flex: 1 1 240px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    input[type="email"]:focus, input[type="text"]:focus {
+      outline: 2px solid var(--accent);
+      border-color: transparent;
+    }
+    button[type="submit"] {
+      padding: 12px 20px;
+      border-radius: 8px;
+      border: 0;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background: var(--accent-hover);
+    }
+    .form-note {
+      margin: 10px 0 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .form-status {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--warn);
+      display: none;
+    }
+    section {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+    h2 {
+      font-size: 1.45rem;
+      letter-spacing: -0.015em;
+      margin: 0 0 20px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .step-num {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .faq-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item:last-child {
+      border-bottom: 0;
+    }
+    .faq-item h3 {
+      margin: 0 0 6px;
+      font-size: 1.02rem;
+    }
+    .faq-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    footer {
+      padding: 28px 0 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">LeaseWatch</div>
+      <div class="tag">For type-beat &amp; independent producers</div>
+    </header>
+
+    <main>
+      <section class="hero" style="border-top: 0;">
+        <span class="eyebrow">Early Access Waitlist</span>
+        <h1>Find the beat-lease upgrades your catalog already owes you.</h1>
+        <p class="subhead">
+          You sell non-exclusive leases with 10k–500k stream caps. Once a buyer drops the song, nobody tells you when it gets close to the limit. LeaseWatch matches your lease sales to released tracks and flags every upgrade and exclusive opportunity.
+        </p>
+
+        <div class="signup-card">
+          <!--
+            Web3Forms setup:
+            1. Go to https://web3forms.com, enter the email that should receive signups, and copy the access key from the email.
+            2. Replace WEB3FORMS_ACCESS_KEY_PLACEHOLDER below with that key (one place only).
+            Until then, the form does not submit and shows "Signups opening shortly."
+          -->
+          <form id="waitlist-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY_PLACEHOLDER" />
+            <input type="hidden" name="subject" value="LeaseWatch waitlist signup" />
+            <input type="hidden" name="from_name" value="LeaseWatch Waitlist" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+            <label for="email" class="sr-only">Email address</label>
+            <div class="form-row">
+              <input id="email" name="email" type="email" required placeholder="you@producername.com" />
+              <button type="submit">Join waitlist</button>
+            </div>
+            <p class="form-note">Free tier planned for up to 25 tracked leases. No spam — only launch and beta invites.</p>
+            <p id="form-status" class="form-status"></p>
+          </form>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why producers lose upgrade revenue</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Spot over-cap songs automatically</h3>
+            <p>Import your BeatStars Customers CSV or log leases manually. LeaseWatch tracks released YouTube and streaming activity against each license tier's caps.</p>
+          </div>
+          <div class="card">
+            <h3>Catch 80% and 100% milestones early</h3>
+            <p>Get alerted before a song blows past its MP3 or WAV cap, and export a clean list of active licensees before you sell an exclusive.</p>
+          </div>
+          <div class="card">
+            <h3>Send friendly upgrade offers in one click</h3>
+            <p>Generate a Stripe upgrade link and a pre-written congratulations email for the artist. You review and approve every message before anything sends.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>How it works</h2>
+        <div class="grid-3">
+          <div class="card">
+            <span class="step-num">STEP 1</span>
+            <h3>Import your leases &amp; caps</h3>
+            <p>Upload a BeatStars CSV export or paste a few leases and set the stream, video, and term limits for each tier.</p>
+          </div>
+          <div class="card">
+            <span class="step-num">STEP 2</span>
+            <h3>Match buyer releases</h3>
+            <p>Send buyers a quick release-claim link or confirm suggested matches found by artist name and beat title.</p>
+          </div>
+          <div class="card">
+            <span class="step-num">STEP 3</span>
+            <h3>Get alerts &amp; collect upgrades</h3>
+            <p>See every track approaching 80% or 100% of its cap in one dashboard and send a direct upgrade checkout link.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>FAQ</h2>
+        <div class="faq-item">
+          <h3>Which beat stores work with LeaseWatch?</h3>
+          <p>Any store where you can export sales or customer CSVs (starting with BeatStars) plus manual entry for Airbit, Shopify, or direct PayPal/Stripe sales.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Does LeaseWatch send emails or copyright strikes automatically?</h3>
+          <p>No. LeaseWatch never contacts your buyers or files takedowns. It flags cap milestones and prepares an upgrade message and payment link for you to send when you choose.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How are songs matched if the artist didn't credit me?</h3>
+          <p>You can include a one-click claim link in your delivery email, and LeaseWatch also suggests candidate matches based on buyer name, beat title, and audio/release metadata for you to confirm.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What will it cost?</h3>
+          <p>Planned pricing starts at $0/month for up to 25 tracked leases, and $15/month for up to 500 leases with daily checks and Stripe upgrade links.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>LeaseWatch · Early-access concept by Eddy Woods LLC</span>
+      <span>Nothing is charged or sent from this waitlist page.</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      var form = document.getElementById("waitlist-form");
+      var status = document.getElementById("form-status");
+      if (!form || !status) return;
+      form.addEventListener("submit", function (e) {
+        var keyInput = form.querySelector('input[name="access_key"]');
+        var key = keyInput ? keyInput.value : "";
+        if (!key || key === "WEB3FORMS_ACCESS_KEY_PLACEHOLDER") {
+          e.preventDefault();
+          status.style.display = "block";
+          status.textContent = "Signups opening shortly. Check back soon.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
